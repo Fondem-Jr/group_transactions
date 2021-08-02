@@ -10,10 +10,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_02_120620) do
+ActiveRecord::Schema.define(version: 2021_08_02_131219) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "groups", force: :cascade do |t|
+    t.string "name"
+    t.string "icon"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_groups_on_user_id"
+  end
+
+  create_table "transfers", force: :cascade do |t|
+    t.string "name"
+    t.string "currency"
+    t.bigint "user_id", null: false
+    t.bigint "group_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["group_id"], name: "index_transfers_on_group_id"
+    t.index ["user_id"], name: "index_transfers_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "name"
@@ -21,4 +41,7 @@ ActiveRecord::Schema.define(version: 2021_08_02_120620) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "groups", "users"
+  add_foreign_key "transfers", "groups"
+  add_foreign_key "transfers", "users"
 end

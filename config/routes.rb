@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
+  #get 'sessions/new'
+  get 'sessions/create'
+  get 'sessions/destroy'
   #get 'admin/index'
-  #get 'seesions/new'
-  get 'seesions/create'
-  get 'seesions/destroy'
   resources :users
 
   get 'admin' => 'admin#index'

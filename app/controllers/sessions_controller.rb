@@ -1,4 +1,4 @@
-class SeesionsController < ApplicationController
+class SessionsController < ApplicationController
   skip_before_action :authorize
   def new
   end
@@ -7,9 +7,10 @@ class SeesionsController < ApplicationController
     user = User.find_by(name: params[:name])
     if user
       session[:user_id] = user.id
-      redirect_to admin_url, notice: 'Logged in!'
+      redirect_to admin_url
     else 
-      redirect_to login_url, alert:"Invalid Username or Password"
+      redirect_to login_url, alert:"Invalid Username"
+    end
   end
 
   def destroy
